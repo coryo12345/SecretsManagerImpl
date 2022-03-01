@@ -17,7 +17,7 @@ export default createVuetify({
           info: '#0984e3',
           secondary: '#feefdd', // antique white
           success: '#a5d8ff', // uranian blue
-          // surface: "#6c5ce7",
+          surface: '#feefdd', //'#6c5ce7',
           warning: '#2d3436',
         },
       },
