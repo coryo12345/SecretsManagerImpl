@@ -1,20 +1,20 @@
 // store.ts
-import { InjectionKey } from "vue";
-import { createStore, useStore as baseUseStore, Store } from "vuex";
+import { InjectionKey } from 'vue';
+import { createStore, useStore as baseUseStore, Store } from 'vuex';
 
 export interface State {
-  count: number;
+  title: string;
 }
 
-export const key: InjectionKey<Store<State>> = Symbol();
+// export const key: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
   state: {
-    count: 0,
+    title: 'SecretsManager',
   },
 });
 
 // define your own `useStore` composition function
-export function useStore() {
-  return baseUseStore(key);
-}
+// export function useStore() {
+//   return baseUseStore(key);
+// }
