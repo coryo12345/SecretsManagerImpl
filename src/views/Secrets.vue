@@ -32,8 +32,4 @@ onMounted(() => {
   outline: rgb(var(--v-theme-background));
   border: 1px solid rgb(var(--v-theme-background));
 }
-
-/* .textfield:focus {
-  outline: none;
-} */
 </style>
