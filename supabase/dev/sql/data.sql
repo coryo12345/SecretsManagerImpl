@@ -31,14 +31,33 @@ create policy "Users can update secret groups they own." on secrets_group for
 update with check (auth.uid() = user_id);
 -- secret
 create table secrets (
-  id serial primary key,
   name text,
+  value text,
   group_id int references secrets_group(id) not null,
+  primary key (group_id, name),
   constraint name_length check (char_length(name) >= 3)
 );
 alter table secrets enable row level security;
 create policy "Secrets are viewable by the owner." on secrets for
 select using (
+    exists(
+      select 1
+      from secrets_group sg
+      where sg.user_id = auth.uid()
+        and sg.id = secrets.group_id
+    )
+  );
+create policy "Secrets are insertable into groups owned by the user." on secrets for
+insert with check (
+    exists(
+      select 1
+      from secrets_group sg
+      where sg.user_id = auth.uid()
+        and sg.id = secrets.group_id
+    )
+  );
+create policy "Secrets are updatable if group is owned by the user." on secrets for
+update with check (
     exists(
       select 1
       from secrets_group sg
