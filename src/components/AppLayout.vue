@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-const store = useStore();
+import { State } from '../store';
+import GlobalSnackbar from './GlobalSnackbar.vue';
+const store = useStore<State>();
 
 const drawer = ref(true);
 const title = computed(() => store.state.title);
@@ -39,8 +41,9 @@ const items = ref([
       />
       <v-toolbar-title class="text-left" v-text="title" />
     </v-app-bar>
-    <v-main>
+    <v-main class="pt-4">
       <slot></slot>
+      <global-snackbar />
       <v-footer :absolute="true" class="bg-primary full-width" :bottom="true">
         <span>&copy; {{ new Date().getFullYear() }}</span>
       </v-footer>
