@@ -17,9 +17,10 @@ create policy "Users can update own profile." on profiles for
 update using (auth.uid() = id);
 -- secret group
 create table secrets_group (
-  id serial primary key,
+  id serial unique,
   user_id uuid references auth.users not null,
   name text,
+  primary key (id, name),
   constraint name_length check (char_length(name) >= 3)
 );
 alter table secrets_group enable row level security;
