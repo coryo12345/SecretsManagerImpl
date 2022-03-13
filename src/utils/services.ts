@@ -67,8 +67,25 @@ export async function addSecret(secret: Secret): Promise<Secret[]> {
   return data as Secret[];
 }
 
+export async function deleteSecret(secret: Secret): Promise<Secret[]> {
+  const { data, error } = await supabase
+    .from('secrets')
+    .delete()
+    .eq('name', 'a')
+    .eq('group_id', 1);
+  // .match({ name: secret.name, group_id: secret.group_id });
+  if (error) {
+    store.dispatch(actions.snackbar.add, {
+      type: 'error',
+      message: 'We were unable to add a secret. Please try again later.',
+    });
+  }
+  return data as Secret[];
+}
+
 export default {
   fetchSecrets,
   addSecretGroup,
   addSecret,
+  deleteSecret,
 };

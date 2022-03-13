@@ -66,6 +66,14 @@ update with check (
         and sg.id = secrets.group_id
     )
   );
+create policy "Secrets are deletable if group is owned by the user." on secrets for delete with check (
+  exists(
+    select 1
+    from secrets_group sg
+    where sg.user_id = auth.uid()
+      and sg.id = secrets.group_id
+  )
+);
 -- Set up Realtime
 begin;
 drop publication if exists supabase_realtime;
