@@ -71,9 +71,7 @@ export async function deleteSecret(secret: Secret): Promise<Secret[]> {
   const { data, error } = await supabase
     .from('secrets')
     .delete()
-    .eq('name', 'a')
-    .eq('group_id', 1);
-  // .match({ name: secret.name, group_id: secret.group_id });
+    .match({ name: secret.name, group_id: secret.group_id });
   if (error) {
     store.dispatch(actions.snackbar.add, {
       type: 'error',
